@@ -1,0 +1,19 @@
+{
+  "timestamp": "now",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+  "results": {
+    "python_version": true,
+    "virtual_env": true,
+    "cuda_available": true,
+    "gpu_detected": true,
+    "packages_installed": true,
+    "gpu_info": [
+      {
+        "id": 0,
+        "name": "NVIDIA GeForce RTX 2080 Ti",
+        "memory_mb": 11264
+      }
+    ]
+  }
+}

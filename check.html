@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao diện tra cứu RAG</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --border-color: #dee2e6;
+            --card-bg: #fff;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+        #search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        #query-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: border-color 0.2s;
+        }
+        #query-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #5a99e2;
+            cursor: not-allowed;
+        }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .hidden { display: none; }
+        #results-container .result-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .result-card h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        .result-card .meta {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        .result-card p {
+            margin: 0;
+        }
+        #status-message {
+            text-align: center;
+            color: #6c757d;
+            padding: 20px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔍 Tra cứu thông tin</h1>
+        <form id="search-form">
+            <input type="text" id="query-input" placeholder="Nhập câu hỏi của bạn ở đây..." required>
+            <button type="submit" id="search-button">
+                <span id="button-text">Tìm kiếm</span>
+                <div id="spinner" class="spinner hidden"></div>
+            </button>
+        </form>
+
+        <div id="results-container"></div>
+        <div id="status-message">Vui lòng nhập câu hỏi để bắt đầu tìm kiếm.</div>
+    </div>
+
+    <script>
+        const searchForm = document.getElementById('search-form');
+        const queryInput = document.getElementById('query-input');
+        const resultsContainer = document.getElementById('results-container');
+        const statusMessage = document.getElementById('status-message');
+        const searchButton = document.getElementById('search-button');
+        const buttonText = document.getElementById('button-text');
+        const spinner = document.getElementById('spinner');
+
+        // URL của API backend
+        const API_URL = 'http://127.0.0.1:8000/search';
+
+        searchForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Ngăn form tải lại trang
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            // Hiển thị trạng thái đang tải
+            resultsContainer.innerHTML = '';
+            statusMessage.textContent = 'Đang tìm kiếm...';
+            searchButton.disabled = true;
+            buttonText.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            try {
+                // Tạo request body
+                const requestBody = {
+                    query: query,
+                    top_k: 5
+                };
+
+                // Gửi yêu cầu POST đến API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || `Lỗi từ server: ${response.status}`);
+                }
+
+                const results = await response.json();
+                displayResults(results);
+
+            } catch (error) {
+                statusMessage.textContent = `Đã xảy ra lỗi: ${error.message}`;
+                console.error('Lỗi khi tìm kiếm:', error);
+            } finally {
+                // Khôi phục lại trạng thái ban đầu của nút
+                searchButton.disabled = false;
+                buttonText.classList.remove('hidden');
+                spinner.classList.add('hidden');
+            }
+        });
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                statusMessage.textContent = 'Không tìm thấy kết quả nào phù hợp.';
+                return;
+            }
+
+            statusMessage.textContent = ''; // Xóa thông báo trạng thái
+            results.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <h3>${result.title} (${result.chunk_id})</h3>
+                    <div class="meta">
+                        <strong>Điểm tương đồng:</strong> ${result.similarity_score.toFixed(4)}
+                    </div>
+                    <p>${result.text}</p>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        }
+    </script>
+
+</body>
+</html>

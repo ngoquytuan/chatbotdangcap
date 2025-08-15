@@ -1,0 +1,54 @@
+2025-08-14 17:03:23,092 - INFO - === RAG SYSTEM ENVIRONMENT CHECKER ===
+2025-08-14 17:03:23,092 - INFO - Checking Python version...
+2025-08-14 17:03:23,093 - INFO - [OK] Python 3.13.0 is compatible
+2025-08-14 17:03:23,093 - INFO - Checking virtual environment...
+2025-08-14 17:03:23,093 - INFO - [OK] Running in virtual environment (venv)
+2025-08-14 17:03:23,093 - INFO - Checking CUDA and GPU availability...
+2025-08-14 17:03:23,095 - WARNING - [WARN] NVCC not found in PATH
+2025-08-14 17:03:23,165 - INFO - [OK] GPU 0: Quadro M5000 (7680 MB)
+2025-08-14 17:03:23,165 - INFO - [OK] GPU 1: NVIDIA P106-100 (6144 MB)
+2025-08-14 17:03:25,579 - INFO - [OK] PyTorch detects 2 CUDA devices
+2025-08-14 17:03:25,583 - INFO - [OK] PyTorch GPU 0: NVIDIA P106-100
+2025-08-14 17:03:25,583 - INFO - [OK] PyTorch GPU 1: Quadro M5000
+2025-08-14 17:03:25,583 - INFO - Checking required packages...
+2025-08-14 17:03:25,584 - INFO - [OK] PyTorch: 2.7.1+cu118
+2025-08-14 17:03:25,590 - INFO - Loading faiss with AVX2 support.
+2025-08-14 17:03:25,616 - INFO - Successfully loaded faiss with AVX2 support.
+2025-08-14 17:03:25,628 - INFO - [OK] FAISS: OK (tested)
+2025-08-14 17:03:30,977 - INFO - [OK] Sentence Transformers: 5.1.0
+2025-08-14 17:03:31,514 - INFO - [OK] FastAPI: 0.116.1
+2025-08-14 17:03:31,600 - INFO - [OK] Uvicorn: 0.35.0
+2025-08-14 17:03:31,600 - INFO - [OK] NumPy: 2.3.2
+2025-08-14 17:03:31,605 - INFO - [OK] SQLite3 (built-in): 3.45.3
+2025-08-14 17:03:31,605 - INFO - [OK] All required packages are installed
+2025-08-14 17:03:31,605 - INFO - Creating project structure...
+2025-08-14 17:03:31,606 - INFO - Created directory: rag_system
+2025-08-14 17:03:31,606 - INFO - Created directory: rag_system\api_service
+2025-08-14 17:03:31,607 - INFO - Created directory: rag_system\api_service\retrieval
+2025-08-14 17:03:31,608 - INFO - Created directory: rag_system\api_service\utils
+2025-08-14 17:03:31,609 - INFO - Created directory: rag_system\data
+2025-08-14 17:03:31,610 - INFO - Created directory: rag_system\data\raw_documents
+2025-08-14 17:03:31,610 - INFO - Created directory: rag_system\data\ingested_json
+2025-08-14 17:03:31,610 - INFO - Created directory: rag_system\data\indexes
+2025-08-14 17:03:31,611 - INFO - Created directory: rag_system\logs
+2025-08-14 17:03:31,611 - INFO - Created directory: rag_system\tests
+2025-08-14 17:03:31,612 - INFO - Created directory: docker
+2025-08-14 17:03:31,612 - INFO - Created directory: scripts
+2025-08-14 17:03:31,613 - INFO - [OK] Project structure created
+2025-08-14 17:03:31,613 - INFO - [OK] .env file created with detected settings
+2025-08-14 17:03:31,613 - INFO - === ENVIRONMENT REPORT ===
+2025-08-14 17:03:31,647 - INFO - Platform: Windows-10-10.0.19045-SP0
+2025-08-14 17:03:31,648 - INFO - Python: 3.13.0
+2025-08-14 17:03:31,648 - INFO - Virtual Environment: Yes
+2025-08-14 17:03:31,648 - INFO - CUDA Available: Yes
+2025-08-14 17:03:31,648 - INFO - GPUs Detected: 2
+2025-08-14 17:03:31,649 - INFO -   - GPU 0: Quadro M5000 (7680 MB)
+2025-08-14 17:03:31,649 - INFO -   - GPU 1: NVIDIA P106-100 (6144 MB)
+2025-08-14 17:03:31,649 - INFO - Required Packages: All installed
+2025-08-14 17:03:31,650 - INFO - [OK] Report saved to logs/environment_report.json
+2025-08-14 17:03:31,650 - INFO - [OK] Environment setup completed successfully!
+2025-08-14 17:03:31,651 - INFO - === NEXT STEPS ===
+2025-08-14 17:03:31,651 - INFO - 1. Review the .env file and adjust settings if needed
+2025-08-14 17:03:31,651 - INFO - 2. Initialize the database: python scripts/init_db.py
+2025-08-14 17:03:31,652 - INFO - 3. Start the API server: uvicorn rag_system.api_service.main:app --reload
+2025-08-14 17:03:31,652 - INFO - [INFO] CUDA detected - GPU acceleration will be used

@@ -1,0 +1,27 @@
+{
+  "system": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_version": "3.13.0",
+    "python_executable": "D:\\projects\\chatbotapp\\M1v3\\venv\\Scripts\\python.exe",
+    "working_directory": "D:\\projects\\chatbotapp\\M1v3",
+    "virtual_env": "D:\\projects\\chatbotapp\\M1v3\\venv"
+  },
+  "packages": {
+    "installed": [
+      "fastapi",
+      "uvicorn",
+      "sentence_transformers",
+      "numpy",
+      "sqlite3",
+      "faiss"
+    ],
+    "missing": []
+  },
+  "directories": {
+    "exists": [
+      "rag_system",
+      "rag_system/api_service",
+      "rag_system/data"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+```powershell
+PS D:\Projects\undertest\docsearch> python -m venv venvTest
+PS D:\Projects\undertest\docsearch> .\venvTest\Scripts\activate
+(venvTest) PS D:\Projects\undertest\docsearch> pip install -r requirements.txt
+pip install -r .\requirements.txt
+
+(venvTest) PS D:\Projects\undertest\docsearch> pip uninstall torch
+pip install pyvi
+pip install torch --index-url https://download.pytorch.org/whl/cu126
+(venvTest) PS D:\Projects\undertest\docsearch> pip install torch --index-url https://download.pytorch.org/whl/cu126
+(venvTest) PS D:\Projects\undertest\docsearch> python.exe .\checkcuda.py
+True
+NVIDIA GeForce RTX 2080 Ti

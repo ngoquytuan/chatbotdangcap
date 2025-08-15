@@ -1,0 +1,28 @@
+api_service/
+├── retrieval/
+│   ├── __init__.py
+│   ├── faiss_retriever.py      # FAISS implementation
+│   ├── bm25_retriever.py       # BM25 implementation
+│   ├── hybrid_retriever.py     # Combination logic
+│   └── metadata_store.py       # SQLite operations
+├── models/
+│   ├── embeddings.py           # Vietnamese embedding model
+│   └── schema.py               # Data models
+├── utils/
+│   ├── database.py             # DB utilities
+│   └── indexing.py             # Index management
+└── main.py                     # FastAPI application
+
+
+
+PS D:\\projects\\chatbotapp\\M1v3> pip install torch --index-url https://download.pytorch.org/whl/cu118
+
+Installing collected packages: torch
+Successfully installed torch-2.7.1+cu118
+(venv) PS D:\\projects\\chatbotapp\\M1v3> python.exe .\\checkcuda.py
+True
+NVIDIA P106-100
+(venv) PS D:\\projects\\chatbotapp\\M1v3> $env:CUDA_VISIBLE_DEVICES="1"
+(venv) PS D:\\projects\\chatbotapp\\M1v3> python.exe .\\checkcuda.py
+True
+Quadro M5000

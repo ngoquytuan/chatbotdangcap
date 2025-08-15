@@ -1,0 +1,16 @@
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+sentence-transformers>=2.2.2
+numpy>=1.24.0
+scipy>=1.10.0
+sqlite-utils>=3.35.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+jinja2>=3.1.0
+aiofiles>=23.0.0
+python-json-logger>=2.0.7
+rank-bm25>=0.2.2
+faiss-cpu  # Will be replaced with faiss-gpu if CUDA available
+pyvi
+PyMuPDF
+python-docx
